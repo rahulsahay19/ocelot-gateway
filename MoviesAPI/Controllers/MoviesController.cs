@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MoviesAPI.Controllers
 {
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    [Route("api/[controller]")]
     public class MoviesController : ControllerBase
     {
         private static readonly string[] Movies = new[]

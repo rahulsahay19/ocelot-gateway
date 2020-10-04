@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SeriesAPI.Controllers
 {
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    [Route("api/[controller]")]
     public class SeriesController : ControllerBase
     {
         private static readonly string[] Series = new[]

@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/movies",
+      "DownstreamPathTemplate": "/api/v1/movies",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -13,7 +13,7 @@
       "UpstreamHttpMethod": [ "Get" ]
     },
     {
-      "DownstreamPathTemplate": "/api/series",
+      "DownstreamPathTemplate": "/api/v1/series",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {

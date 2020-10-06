@@ -1,0 +1,10 @@
+@identityServiceURL = https://localhost:5004/api/authentication/authenticate
+
+# ================= JWT SERVICE ======================= #
+POST {{identityServiceURL}}
+content-type: application/json
+
+{
+	"username": "admin",
+	"password": "Password@1"
+}

@@ -1,0 +1,7 @@
+@seriesServiceUrl = https://localhost:5006/series
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluIiwibmJmIjoxNjAxOTk1NjYzLCJleHAiOjE2MDE5OTkyNjMsImlhdCI6MTYwMTk5NTY2M30.3pJB5Q511KjxIpNbfg8kKtE6jFSuFlaXyPIN0hTFROo
+# ================= Series SERVICE ======================= #
+GET {{seriesServiceUrl}}
+content-type: application/json
+authorization: Bearer {{accessToken}}
+content-type: application/json

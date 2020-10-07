@@ -22,7 +22,12 @@
         "PeriodTimespan": 1,
         "Limit": 1
       },
-      "FileCacheOptions": { "TtlSeconds": 20 }
+      "FileCacheOptions": { "TtlSeconds": 20 },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 1000,
+        "TimeoutValue": 5000
+      }
     },
     {
       "DownstreamPathTemplate": "/api/v1/series",
@@ -46,7 +51,12 @@
         "PeriodTimespan": 1,
         "Limit": 1
       },
-      "FileCacheOptions": { "TtlSeconds": 20 }
+      "FileCacheOptions": { "TtlSeconds": 20 },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 1000,
+        "TimeoutValue": 5000
+      }
     }
   ],
   "GlobalConfiguration": {

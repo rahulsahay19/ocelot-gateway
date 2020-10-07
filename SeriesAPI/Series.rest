@@ -1,5 +1,5 @@
 @seriesServiceUrl = https://localhost:5006/series
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluIiwibmJmIjoxNjAxOTk1NjYzLCJleHAiOjE2MDE5OTkyNjMsImlhdCI6MTYwMTk5NTY2M30.3pJB5Q511KjxIpNbfg8kKtE6jFSuFlaXyPIN0hTFROo
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluIiwibmJmIjoxNjAyMDU1MjA4LCJleHAiOjE2MDIwNTg4MDgsImlhdCI6MTYwMjA1NTIwOH0.-Q3MuyOfrC2E1pE3o4QRM7siMqd_mLJ1Ywo-68zJSzU
 # ================= Series SERVICE ======================= #
 GET {{seriesServiceUrl}}
 content-type: application/json

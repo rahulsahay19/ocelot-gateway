@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoviesAPI", "MoviesAPI\Movi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeriesAPI", "SeriesAPI\SeriesAPI.csproj", "{D2A73F3C-665F-4309-874E-A51F2A3609E4}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{6D986523-D11E-4E14-8148-3C2C6ED5B3ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{D2A73F3C-665F-4309-874E-A51F2A3609E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2A73F3C-665F-4309-874E-A51F2A3609E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2A73F3C-665F-4309-874E-A51F2A3609E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D986523-D11E-4E14-8148-3C2C6ED5B3ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D986523-D11E-4E14-8148-3C2C6ED5B3ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D986523-D11E-4E14-8148-3C2C6ED5B3ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D986523-D11E-4E14-8148-3C2C6ED5B3ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

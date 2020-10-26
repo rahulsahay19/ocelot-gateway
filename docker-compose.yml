@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  moviesapi:
+    image: ${DOCKER_REGISTRY-}moviesapi
+    build:
+      context: .
+      dockerfile: MoviesAPI/Dockerfile
+
+  seriesapi:
+    image: ${DOCKER_REGISTRY-}seriesapi
+    build:
+      context: .
+      dockerfile: SeriesAPI/Dockerfile
+
+
+  jwt.server:
+    image: ${DOCKER_REGISTRY-}jwtserver
+    build:
+      context: .
+      dockerfile: JWT/Dockerfile
+

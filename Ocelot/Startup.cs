@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Ocelot.Cache.CacheManager;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Ocelot.Provider.Consul;
 using Ocelot.Provider.Polly;
 
 namespace OcelotGateway
@@ -47,7 +48,8 @@ namespace OcelotGateway
             });
             services.AddOcelot()
                 .AddCacheManager(option => option.WithDictionaryHandle())
-                .AddPolly();
+                .AddPolly()
+                .AddConsul();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

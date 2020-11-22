@@ -1,4 +1,12 @@
+using System;
+using System.Reflection;
 using System.Text;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Common;
+using Common.App;
+using Common.Consul;
+using Consul;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,6 +25,8 @@ namespace OcelotGateway
 {
     public class Startup
     {
+        private static readonly string[] Headers = new[] { "X-Operation", "X-Resource", "X-Total-Count" };
+        public IContainer Container { get; private set; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,7 +35,7 @@ namespace OcelotGateway
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication(option =>
             {
@@ -46,14 +56,34 @@ namespace OcelotGateway
                 };
 
             });
+            services.AddConsul();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", cors =>
+                    cors.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                        .WithExposedHeaders(Headers));
+            });
             services.AddOcelot()
                 .AddCacheManager(option => option.WithDictionaryHandle())
-                .AddPolly()
-                .AddConsul();
+                .AddPolly();
+            //.AddConsul();
+
+            var builder = new ContainerBuilder();
+            builder.RegisterAssemblyTypes(Assembly.GetEntryAssembly())
+                .AsImplementedInterfaces();
+            builder.Populate(services);
+           
+            Container = builder.Build();
+
+            return new AutofacServiceProvider(Container);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime applicationLifetime, IConsulClient client, IStartupInitializer startupInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -62,13 +92,21 @@ namespace OcelotGateway
 
             app.UseRouting();
             app.UseAuthentication();
+            app.UseServiceId();
           
             app.UseEndpoints(endpoints =>
                 {
                     endpoints.MapGet("/",
                         async context => { await context.Response.WriteAsync("Ocelot API Gateway"); });
                 });
+            var consulServiceId = app.UseConsul();
+            applicationLifetime.ApplicationStopped.Register(() =>
+            {
+                client.Agent.ServiceDeregister(consulServiceId);
+                Container.Dispose();
+            });
             app.UseOcelot().Wait();
+            startupInitializer.InitializeAsync();
         }
     }
 }

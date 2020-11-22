@@ -29,5 +29,8 @@ namespace MoviesAPI.Controllers
             
             return Ok(Movies[rng.Next(Movies.Length)]);
         }
+
+        [HttpGet("ping")]
+        public IActionResult Ping() => Ok();
     }
 }

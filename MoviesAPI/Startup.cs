@@ -1,3 +1,8 @@
+using System;
+using System.Reflection;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Common.App;
 using Common.Consul;
 using Consul;
 using Microsoft.AspNetCore.Builder;
@@ -25,14 +30,23 @@ namespace MoviesAPI
         }
         
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
 
             //services.AddControllers();
-            services.AddMvcCore()
-                .SetCompatibilityVersion(CompatibilityVersion.Latest)
-                .AddApiExplorer();
+            //services.AddMvcCore()
+            //    .SetCompatibilityVersion(CompatibilityVersion.Latest)
+            //    .AddApiExplorer();
+            services.AddCustomMvc();
             services.AddConsul();
+            var builder = new ContainerBuilder();
+            //builder.RegisterType<DiscountRepository>().As<IDiscountRepository>();
+            //This will register all interfaces alongwith its different implementations
+            builder.RegisterAssemblyTypes(Assembly.GetEntryAssembly())
+                .AsImplementedInterfaces();
+            // This will copy paste services in autofac container. This means whenever it gets registered by asp.net by default at services.AddCustomMvc();
+            // this will continue registering new components there.
+            builder.Populate(services);
 
             services.AddVersionedApiExplorer(options =>
             {
@@ -42,6 +56,8 @@ namespace MoviesAPI
 
             services.AddSwaggerGenerator(_loggerFactory, _configuration);
             services.AddApiVersioning();
+            Container = builder.Build();
+            return new AutofacServiceProvider(Container);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

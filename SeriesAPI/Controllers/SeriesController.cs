@@ -21,5 +21,8 @@ namespace SeriesAPI.Controllers
             
             return Ok(Series[rng.Next(Series.Length)]);
         }
+
+        [HttpGet("ping")]
+        public IActionResult Ping() => Ok();
     }
 }

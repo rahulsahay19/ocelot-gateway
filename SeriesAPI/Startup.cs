@@ -1,4 +1,9 @@
+using System;
+using System.Reflection;
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Common;
+using Common.App;
 using Common.Consul;
 using Consul;
 using Microsoft.AspNetCore.Builder;
@@ -25,14 +30,11 @@ namespace SeriesAPI
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
 
             //services.AddControllers();
-            services.AddMvcCore()
-                .SetCompatibilityVersion(CompatibilityVersion.Latest)
-                .AddApiExplorer();
-
+            services.AddCustomMvc();
             services.AddConsul();
 
             services.AddVersionedApiExplorer(options =>
@@ -43,11 +45,17 @@ namespace SeriesAPI
 
             services.AddSwaggerGenerator(_loggerFactory, _configuration);
             services.AddApiVersioning();
+            var builder = new ContainerBuilder();
+            builder.RegisterAssemblyTypes(Assembly.GetEntryAssembly())
+                .AsImplementedInterfaces();
+            builder.Populate(services);
+            Container = builder.Build();
+            return new AutofacServiceProvider(Container);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider,
-            IHostApplicationLifetime applicationLifetime, IConsulClient consulClient)
+            IHostApplicationLifetime applicationLifetime, IStartupInitializer initializer, IConsulClient consulClient)
         {
             if (env.IsDevelopment())
             {
@@ -55,8 +63,8 @@ namespace SeriesAPI
             }
 
             //  app.UseHttpsRedirection();
-          //  app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
+            //  app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            initializer.InitializeAsync();
             app.UseRouting();
 
          //   app.UseAuthorization();

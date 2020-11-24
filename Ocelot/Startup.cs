@@ -37,6 +37,7 @@ namespace OcelotGateway
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddCustomMvc();
             services.AddAuthentication(option =>
             {
                 option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -93,7 +94,7 @@ namespace OcelotGateway
             app.UseRouting();
             app.UseAuthentication();
             app.UseServiceId();
-          
+            
             app.UseEndpoints(endpoints =>
                 {
                     endpoints.MapGet("/",
@@ -105,8 +106,9 @@ namespace OcelotGateway
                 client.Agent.ServiceDeregister(consulServiceId);
                 Container.Dispose();
             });
-            app.UseOcelot().Wait();
             startupInitializer.InitializeAsync();
+            app.UseOcelot().Wait();
+
         }
     }
 }

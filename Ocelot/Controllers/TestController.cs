@@ -20,5 +20,8 @@ namespace OcelotGateway.Controllers
 
             return Ok(Test[rng.Next(Test.Length)]);
         }
+
+        [HttpGet("ping")]
+        public IActionResult Ping() => Ok();
     }
 }

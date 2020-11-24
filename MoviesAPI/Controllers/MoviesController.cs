@@ -15,7 +15,7 @@ namespace MoviesAPI.Controllers
             "Die Another Day", "Top Gun", "Grease", "Dil Bechara", "Jurassic Park"
         };
 
-    
+
         [HttpGet]
         public ActionResult Get()
         {
@@ -26,11 +26,8 @@ namespace MoviesAPI.Controllers
                 Thread.Sleep(5000);
             }
             var rng = new Random();
-            
+
             return Ok(Movies[rng.Next(Movies.Length)]);
         }
-
-        [HttpGet("ping")]
-        public IActionResult Ping() => Ok();
     }
 }
